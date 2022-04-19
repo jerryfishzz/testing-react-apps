@@ -39,13 +39,34 @@ test('counter increments and decrements when the buttons are clicked', () => {
   expect(message.textContent).toBe('Current count: 0')
 
   // 🐨 click the increment button (💰 act(() => increment.click()))
-  act(() => increment.click())
+  // act(() => increment.click())
+
+  // Extra 1
+  const incrementClickEvent = new MouseEvent('click', {
+    bubbles: true,
+    cancelable: true,
+    button: 0, // Left mouse key
+  })
+  act(() => increment.dispatchEvent(incrementClickEvent))
+
 
   // 🐨 assert the message.textContent
   expect(message.textContent).toBe('Current count: 1')
 
   // 🐨 click the decrement button (💰 act(() => decrement.click()))
-  act(() => decrement.click())
+  // act(() => decrement.click())
+
+  // Extra 1
+  // No idear why the two events can't use one instance instead
+  // since the initial value is just same.
+  // I used incrementClickEvent to try it in decrementClickEvent, it worked.
+  // Guess something will be talked later in the tutorial about this.
+  const decrementClickEvent = new MouseEvent('click', {
+    bubbles: true,
+    cancelable: true,
+    button: 0,
+  })
+  act(() => decrement.dispatchEvent(decrementClickEvent))
 
   // 🐨 assert the message.textContent
   expect(message.textContent).toBe('Current count: 0')

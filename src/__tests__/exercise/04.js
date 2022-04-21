@@ -6,6 +6,8 @@ import {render, screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Login from '../../components/login'
 
+
+/* 
 // Excercise
 // Go to see the final version. The coding style is better than my solution.
 test('submitting the form calls onSubmit with username and password', async () => {
@@ -40,6 +42,31 @@ test('submitting the form calls onSubmit with username and password', async () =
   expect(submittedData.password).toBe('sbwikus')
   // 💰 use `toEqual` from Jest: 📜 https://jestjs.io/docs/en/expect#toequalvalue
 })
+ */
+
+
+// Extra 1
+test('submitting the form calls onSubmit with username and password', async () => {
+  const handleSubmit = jest.fn()
+  
+  render(<Login onSubmit={handleSubmit} />)
+  
+  const username = 'jerry'
+  const password = 'sbwikus'
+  
+  await userEvent.type(screen.getByLabelText(/username/i), username)
+  await userEvent.type(screen.getByLabelText(/password/i), password)
+
+  const submitButton = screen.getByRole('button', { name: /submit/i })
+  await userEvent.click(submitButton)
+  
+  expect(handleSubmit).toHaveBeenCalledWith({
+    username,
+    password
+  })
+  expect(handleSubmit).toHaveBeenCalledTimes(1) // From tutorial
+})
+
 
 /*
 eslint

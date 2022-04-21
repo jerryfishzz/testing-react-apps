@@ -10,6 +10,7 @@ import {build, fake} from '@jackfranklin/test-data-bot'
 import {rest} from 'msw'
 import {setupServer} from 'msw/node'
 import Login from '../../components/login-submission'
+import { handlers } from 'test/server-handlers'
 
 const buildLoginForm = build({
   fields: {
@@ -18,6 +19,9 @@ const buildLoginForm = build({
   },
 })
 
+
+/* 
+// Exercise
 // 🐨 get the server setup with an async function to handle the login POST request:
 // 💰 here's something to get you started
 const server = setupServer(
@@ -25,12 +29,24 @@ const server = setupServer(
     'https://auth-provider.example.com/api/login',
     // Note, this async here is not useful
     async (req, res, ctx) => {
+      if (!req.body.password) {
+        return res(ctx.status(400), ctx.json({message: 'password required'}))
+      }
+      if (!req.body.username) {
+        return res(ctx.status(400), ctx.json({message: 'username required'}))
+      }
       return res(ctx.json({username: req.body.username}))
     },
   )
 )
 // you'll want to respond with an JSON object that has the username.
 // 📜 https://mswjs.io/
+ */
+
+
+// Extra 1
+const server = setupServer(...handlers)
+
 
 // 🐨 before all the tests, start the server with `server.listen()`
 beforeAll(() => server.listen())

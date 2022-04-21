@@ -6,6 +6,8 @@ import {render, screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Login from '../../components/login'
 
+// Excercise
+// Go to see the final version. The coding style is better than my solution.
 test('submitting the form calls onSubmit with username and password', async () => {
   // 🐨 create a variable called "submittedData" and a handleSubmit function that
   // accepts the data and assigns submittedData to the data that was submitted
@@ -15,7 +17,7 @@ test('submitting the form calls onSubmit with username and password', async () =
   //
   // 🐨 render the login with your handleSubmit function as the onSubmit prop
   render(<Login onSubmit={handleSubmit} />)
-  screen.debug()
+  screen.debug() // Output UI
   //
   // 🐨 get the username and password fields via `getByLabelText`
   const username = screen.getByRole('textbox', { name: /username/i })

@@ -55,14 +55,14 @@ afterAll(() => server.close())
 
 test(`logging in displays the user's username`, async () => {
   render(<Login />)
-  const {username, password} = buildLoginForm()
+  const {username, password} = buildLoginForm({ overrides: { password: '' }})
 
-  await userEvent.type(screen.getByLabelText(/username/i), username)
-  await userEvent.type(screen.getByLabelText(/password/i), password)
+  if (username) await userEvent.type(screen.getByLabelText(/username/i), username)
+  if (password) await userEvent.type(screen.getByLabelText(/password/i), password)
   // 🐨 uncomment this and you'll start making the request!
   await userEvent.click(screen.getByRole('button', {name: /submit/i}))
 
-  screen.debug()
+  
 
   // as soon as the user hits submit, we render a spinner to the screen. That
   // spinner has an aria-label of "loading" for accessibility purposes, so
@@ -70,8 +70,24 @@ test(`logging in displays the user's username`, async () => {
   await waitForElementToBeRemoved(() => screen.getByLabelText(/loading/i))
   // 📜 https://testing-library.com/docs/dom-testing-library/api-async#waitforelementtoberemoved
 
+
+  screen.debug()
+
   // once the login is successful, then the loading spinner disappears and
   // we render the username.
   // 🐨 assert that the username is on the screen
-  expect(screen.getByText(username)).toBeInTheDocument()
+  if (username && password) expect(screen.getByText(username)).toBeInTheDocument()
+  // Exercise and extra 2
+
+  // Extra 2
+  if (!password) {
+    expect(screen.getByText('password required')).toBeInTheDocument()
+  }
+
+  // Extra 2
+  if (password && !username) {
+    expect(screen.getByText('username required')).toBeInTheDocument()
+  }
+
+  // For better solution of extra 2, go to see the final version
 })

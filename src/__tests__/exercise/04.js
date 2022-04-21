@@ -6,6 +6,7 @@ import {render, screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Login from '../../components/login'
 import faker from 'faker'
+import { build, fake } from '@jackfranklin/test-data-bot'
 
 
 /* 
@@ -101,6 +102,7 @@ test('submitting the form calls onSubmit with username and password', async () =
  */
 
 
+/* 
 // Extra 3
 function buildLoginForm(overrides) {
   return {
@@ -128,10 +130,40 @@ test('submitting the form calls onSubmit with username and password', async () =
   })
   expect(handleSubmit).toHaveBeenCalledTimes(1) // From tutorial
 })
+ */
 
 
+// Extra 4
+const loginFormBuilder = build('LoginForm', {
+  fields: {
+    // Use fake to make sure everytime when this builder is called, 
+    // the value will be new.
+    // f looks like a built-in module having the same function as faker
+    username: fake(f => f.internet.userName()),
+    password: fake(f => f.internet.password()),
+  },
+});
 
+test('submitting the form calls onSubmit with username and password', async () => {
+  const handleSubmit = jest.fn()
+  render(<Login onSubmit={handleSubmit} />)
 
+  // Override when using Test Data Bot
+  const {username, password} = loginFormBuilder({overrides: {password: 'abc'}})
+  console.log(username, password)
+  
+  await userEvent.type(screen.getByLabelText(/username/i), username)
+  await userEvent.type(screen.getByLabelText(/password/i), password)
+
+  const submitButton = screen.getByRole('button', { name: /submit/i })
+  await userEvent.click(submitButton)
+  
+  expect(handleSubmit).toHaveBeenCalledWith({
+    username,
+    password
+  })
+  expect(handleSubmit).toHaveBeenCalledTimes(1) // From tutorial
+})
 
 
 /*

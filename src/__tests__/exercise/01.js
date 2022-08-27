@@ -46,7 +46,12 @@ test('counter increments and decrements when the buttons are clicked', () => {
   expect(message.textContent).toBe('Current count: 0')
 
   // 🐨 click the increment button (💰 act(() => increment.click()))
-  act(() => increment.click())
+  // act(() => increment.click())
+  act(() => increment.dispatchEvent(new MouseEvent('click', {
+    bubbles: true, // Enable event delegation
+    cancelable: true,
+    button: 0, // Left button click
+  })))
 
   // 🐨 assert the message.textContent
   expect(message.textContent).toBe('Current count: 1')

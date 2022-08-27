@@ -6,6 +6,9 @@ import {act} from 'react-dom/test-utils'
 import {createRoot} from 'react-dom/client'
 // 🐨 import the `render` and `fireEvent` utilities from '@testing-library/react'
 import Counter from '../../components/counter'
+import {fireEvent, render} from '@testing-library/react'
+
+// import '@testing-library/jest-dom'
 
 // NOTE: this is a new requirement in React 18
 // https://reactjs.org/blog/2022/03/08/react-18-upgrade-guide.html#configuring-your-testing-environment
@@ -14,14 +17,14 @@ import Counter from '../../components/counter'
 global.IS_REACT_ACT_ENVIRONMENT = true
 
 // 💣 remove this. React Testing Library does this automatically!
-beforeEach(() => {
-  document.body.innerHTML = ''
-})
+// beforeEach(() => {
+//   document.body.innerHTML = ''
+// })
 
 test('counter increments and decrements when the buttons are clicked', () => {
   // 💣 remove these two lines, React Testing Library will create the div for you
-  const div = document.createElement('div')
-  document.body.append(div)
+  // const div = document.createElement('div')
+  // document.body.append(div)
 
   // 🐨 swap createRoot and root.render with React Testing Library's render
   // Note that React Testing Library's render doesn't need you to pass a `div`
@@ -29,30 +32,38 @@ test('counter increments and decrements when the buttons are clicked', () => {
   // bunch of utilities on it. For now, let's just grab `container` which is
   // the div that React Testing Library creates for us.
   // 💰 const {container} = render(<Counter />)
-  const root = createRoot(div)
-  act(() => root.render(<Counter />))
+  // const root = createRoot(div)
+  // act(() => root.render(<Counter />))
+  const {container} = render(<Counter />)
 
   // 🐨 instead of `div` here you'll want to use the `container` you get back
   // from React Testing Library
-  const [decrement, increment] = div.querySelectorAll('button')
-  const message = div.firstChild.querySelector('div')
+  // const [decrement, increment] = div.querySelectorAll('button')
+  // const message = div.firstChild.querySelector('div')
+  const [decrement, increment] = container.querySelectorAll('button')
+  const message = container.firstChild.querySelector('div')
 
-  expect(message.textContent).toBe('Current count: 0')
+  // expect(message.textContent).toBe('Current count: 0')
+  expect(message).toHaveTextContent('Current count: 0') // Has better descriptions
 
   // 🐨 replace the next two statements with `fireEvent.click(button)`
   // 💰 note that you can remove `act` completely!
-  const incrementClickEvent = new MouseEvent('click', {
-    bubbles: true,
-    cancelable: true,
-    button: 0,
-  })
-  act(() => increment.dispatchEvent(incrementClickEvent))
-  expect(message.textContent).toBe('Current count: 1')
-  const decrementClickEvent = new MouseEvent('click', {
-    bubbles: true,
-    cancelable: true,
-    button: 0,
-  })
-  act(() => decrement.dispatchEvent(decrementClickEvent))
+  // const incrementClickEvent = new MouseEvent('click', {
+  //   bubbles: true,
+  //   cancelable: true,
+  //   button: 0,
+  // })
+  // act(() => increment.dispatchEvent(incrementClickEvent))
+  fireEvent.click(increment)
+  // expect(message.textContent).toBe('Current count: 1')
+  expect(message).toHaveTextContent('Current count: 1')
+
+  // const decrementClickEvent = new MouseEvent('click', {
+  //   bubbles: true,
+  //   cancelable: true,
+  //   button: 0,
+  // })
+  // act(() => decrement.dispatchEvent(decrementClickEvent))
+  fireEvent.click(decrement)
   expect(message.textContent).toBe('Current count: 0')
 })

@@ -24,6 +24,7 @@
 [![All Contributors][all-contributors-badge]](#contributors)
 [![GPL 3.0 License][license-badge]][license]
 [![Code of Conduct][coc-badge]][coc]
+[![Gitpod ready-to-code][gitpod-badge]](https://gitpod.io/#https://github.com/kentcdodds/testing-react-apps)
 <!-- prettier-ignore-end -->
 
 ## Prerequisites
@@ -37,11 +38,24 @@
 > material in this repo has been updated to React version ^18. Differences are
 > minor and any relevant differences are noted in the instructions.
 
+## Quick start
+
+It's recommended you run everything in the same environment you work in every
+day, but if you don't want to set up the repository locally, you can get started
+in one click with [Gitpod](https://gitpod.io),
+[CodeSandbox](https://codesandbox.io/s/github/kentcdodds/testing-react-apps), or
+by following the [video demo](https://www.youtube.com/watch?v=gCoVJm3hGk4)
+instructions for [GitHub Codespaces](https://github.com/features/codespaces).
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/kentcdodds/testing-react-apps)
+
+For a local development environment, follow the instructions below
+
 ## System Requirements
 
 - [git][git] v2.13 or greater
-- [NodeJS][node] `12 || 14 || 15 || 16 || 17`
-- [npm][npm] v6 or greater
+- [NodeJS][node] `14 || 16 || 18`
+- [npm][npm] v8.16.0 or greater
 
 All of these must be available in your `PATH`. To verify things are set up
 properly, you can run this:
@@ -65,7 +79,7 @@ variable and how to fix it here for [windows][win-path] or
 After you've made sure to have the correct things (and versions) installed, you
 should be able to just run a few commands to get set up:
 
-```
+```bash
 git clone https://github.com/kentcdodds/testing-react-apps.git
 cd testing-react-apps
 node setup
@@ -83,7 +97,7 @@ it's a lot).
 If you can't get the setup script to work, then just make sure you have the
 right versions of the requirements listed above, and run the following commands:
 
-```
+```bash
 npm install
 npm run validate
 ```
@@ -91,15 +105,9 @@ npm run validate
 If you are still unable to fix issues and you know how to use Docker 🐳 you can
 setup the project with the following command:
 
-```
+```bash
 docker-compose up
 ```
-
-It's recommended you run everything locally in the same environment you work in
-every day, but if you're having issues getting things set up, you can also set
-this up using [GitHub Codespaces](https://github.com/features/codespaces)
-([video demo](https://www.youtube.com/watch?v=gCoVJm3hGk4)) or
-[Codesandbox](https://codesandbox.io/s/github/kentcdodds/testing-react-apps).
 
 ## Running the app
 
@@ -205,6 +213,7 @@ Thanks goes to these wonderful people
   <tr>
     <td align="center"><a href="https://github.com/skgyan"><img src="https://avatars.githubusercontent.com/u/5046860?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Sushil Kumar</b></sub></a><br /><a href="https://github.com/kentcdodds/testing-react-apps/commits?author=skgyan" title="Code">💻</a></td>
     <td align="center"><a href="https://www.linkedin.com/in/joao-fernandes-75b9a763/"><img src="https://avatars.githubusercontent.com/u/7046309?v=4?s=100" width="100px;" alt=""/><br /><sub><b>João Pina Fernandes</b></sub></a><br /><a href="https://github.com/kentcdodds/testing-react-apps/commits?author=Joao-pina-fernandes" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/joshjm"><img src="https://avatars.githubusercontent.com/u/21700579?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Josh</b></sub></a><br /><a href="https://github.com/kentcdodds/testing-react-apps/commits?author=joshjm" title="Documentation">📖</a></td>
   </tr>
 </table>
 
@@ -234,6 +243,7 @@ Thank you! https://kcd.im/tra-ws-feedback
 [license-badge]: https://img.shields.io/badge/license-GPL%203.0%20License-blue.svg?style=flat-square
 [license]: https://github.com/kentcdodds/testing-react-apps/blob/main/LICENSE
 [coc-badge]: https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square
+[gitpod-badge]: https://img.shields.io/badge/Gitpod-ready--to--code-908a85?logo=gitpod
 [coc]: https://github.com/kentcdodds/testing-react-apps/blob/main/CODE_OF_CONDUCT.md
 [emojis]: https://github.com/kentcdodds/all-contributors#emoji-key
 [all-contributors]: https://github.com/kentcdodds/all-contributors

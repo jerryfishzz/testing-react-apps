@@ -26,7 +26,7 @@ test('submitting the form calls onSubmit with username and password', async () =
   // const handleSubmit = data => (submittedData = data)
 
   // Extra 1
-  const mockFn = jest.fn()
+  const handleSubmit = jest.fn()
 
   //
   // 🐨 render the login with your handleSubmit function as the onSubmit prop
@@ -35,7 +35,7 @@ test('submitting the form calls onSubmit with username and password', async () =
   // render(<Login onSubmit={handleSubmit} />)
 
   // Extra 1
-  render(<Login onSubmit={mockFn} />)
+  render(<Login onSubmit={handleSubmit} />)
 
   screen.debug()
 
@@ -68,7 +68,7 @@ test('submitting the form calls onSubmit with username and password', async () =
   // expect(submittedData).toEqual({username: username, password: password})
 
   // Extra 1
-  expect(mockFn).toHaveBeenCalledWith({username: username, password: password})
+  expect(handleSubmit).toHaveBeenCalledWith({username: username, password: password})
 })
 
 /*

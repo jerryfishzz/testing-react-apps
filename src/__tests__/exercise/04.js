@@ -6,13 +6,13 @@ import {render, screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 // import { faker } from '@faker-js/faker';
 import Login from '../../components/login'
-import { build, fake } from '@jackfranklin/test-data-bot';
+import {build, fake} from '@jackfranklin/test-data-bot'
 
 const loginBuilder = build('Login', {
   fields: {
     username: fake(f => f.name.findName()),
-    password: fake(f => f.internet.password())
-  }
+    password: fake(f => f.internet.password()),
+  },
 })
 
 test('submitting the form calls onSubmit with username and password', async () => {
@@ -20,12 +20,23 @@ test('submitting the form calls onSubmit with username and password', async () =
   // accepts the data and assigns submittedData to the data that was submitted
   // 💰 if you need a hand, here's what the handleSubmit function should do:
   // const handleSubmit = data => (submittedData = data)
-  let submittedData
-  const handleSubmit = data => (submittedData = data)
+
+  // Exercise
+  // let submittedData
+  // const handleSubmit = data => (submittedData = data)
+
+  // Extra 1
+  const mockFn = jest.fn()
 
   //
   // 🐨 render the login with your handleSubmit function as the onSubmit prop
-  render(<Login onSubmit={handleSubmit} />)
+
+  // Exercise
+  // render(<Login onSubmit={handleSubmit} />)
+
+  // Extra 1
+  render(<Login onSubmit={mockFn} />)
+
   screen.debug()
 
   //
@@ -35,8 +46,8 @@ test('submitting the form calls onSubmit with username and password', async () =
 
   const {username, password} = loginBuilder({
     overrides: {
-      password: 'abc'
-    }
+      password: 'abc',
+    },
   })
 
   // 🐨 use `await userEvent.type...` to change the username and password fields to
@@ -52,7 +63,12 @@ test('submitting the form calls onSubmit with username and password', async () =
   //
   // assert that submittedData is correct
   // 💰 use `toEqual` from Jest: 📜 https://jestjs.io/docs/en/expect#toequalvalue
-  expect(submittedData).toEqual({username: username, password: password})
+
+  // Exercise
+  // expect(submittedData).toEqual({username: username, password: password})
+
+  // Extra 1
+  expect(mockFn).toHaveBeenCalledWith({username: username, password: password})
 })
 
 /*

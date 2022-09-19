@@ -60,7 +60,11 @@ test('submitting the form calls onSubmit with username and password', async () =
   // })
 
   // Extra 2
-  const {username, password} = buildLoginForm()
+  // const {username, password} = buildLoginForm()
+
+  // Extra 3
+  const {username, password} = buildLoginForm({password: 'abc'})
+
   console.log(username)
   console.log(password)
 
@@ -81,7 +85,7 @@ test('submitting the form calls onSubmit with username and password', async () =
   // Exercise
   // expect(submittedData).toEqual({username: username, password: password})
 
-  // Extra 1
+  // Extra 1, 2, 3
   expect(handleSubmit).toHaveBeenCalledWith({
     username: username,
     password: password,

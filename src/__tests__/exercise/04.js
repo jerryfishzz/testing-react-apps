@@ -9,10 +9,19 @@ import Login from '../../components/login'
 // import {build, fake} from '@jackfranklin/test-data-bot'
 
 // Extra 2
-function buildLoginForm() {
+// function buildLoginForm() {
+//   return {
+//     username: faker.internet.userName(),
+//     password: faker.internet.password(),
+//   }
+// }
+
+// Extra 3
+function buildLoginForm(overrides) {
   return {
     username: faker.internet.userName(),
     password: faker.internet.password(),
+    ...overrides,
   }
 }
 
@@ -85,10 +94,16 @@ test('submitting the form calls onSubmit with username and password', async () =
   // Exercise
   // expect(submittedData).toEqual({username: username, password: password})
 
-  // Extra 1, 2, 3
+  // Extra 1, 2
+  // expect(handleSubmit).toHaveBeenCalledWith({
+  //   username: username,
+  //   password: password,
+  // })
+
+  // Extra 3
   expect(handleSubmit).toHaveBeenCalledWith({
     username: username,
-    password: password,
+    password: 'abc',
   })
 })
 

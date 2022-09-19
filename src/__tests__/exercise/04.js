@@ -109,6 +109,10 @@ test('submitting the form calls onSubmit with username and password', async () =
     username: username,
     password: 'abc',
   })
+
+  // Extra 1, 2, 3, 4. From tutorial.
+  // For submission, only being called once, such as checkout, is very important.
+  expect(handleSubmit).toHaveBeenCalledTimes(1)
 })
 
 /*

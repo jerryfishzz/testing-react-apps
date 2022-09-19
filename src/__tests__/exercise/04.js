@@ -4,16 +4,24 @@
 import * as React from 'react'
 import {render, screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-// import { faker } from '@faker-js/faker';
+import faker from 'faker' // Extra 2
 import Login from '../../components/login'
-import {build, fake} from '@jackfranklin/test-data-bot'
+// import {build, fake} from '@jackfranklin/test-data-bot'
 
-const loginBuilder = build('Login', {
-  fields: {
-    username: fake(f => f.name.findName()),
-    password: fake(f => f.internet.password()),
-  },
-})
+// Extra 2
+function buildLoginForm() {
+  return {
+    username: faker.internet.userName(),
+    password: faker.internet.password(),
+  }
+}
+
+// const loginBuilder = build('Login', {
+//   fields: {
+//     username: fake(f => f.name.findName()),
+//     password: fake(f => f.internet.password()),
+//   },
+// })
 
 test('submitting the form calls onSubmit with username and password', async () => {
   // 🐨 create a variable called "submittedData" and a handleSubmit function that
@@ -44,11 +52,17 @@ test('submitting the form calls onSubmit with username and password', async () =
   const usernameInput = screen.getByLabelText(/username/i)
   const passwordInput = screen.getByLabelText(/password/i)
 
-  const {username, password} = loginBuilder({
-    overrides: {
-      password: 'abc',
-    },
-  })
+  // Exercise, extra 1
+  // const {username, password} = loginBuilder({
+  //   overrides: {
+  //     password: 'abc',
+  //   },
+  // })
+
+  // Extra 2
+  const {username, password} = buildLoginForm()
+  console.log(username)
+  console.log(password)
 
   // 🐨 use `await userEvent.type...` to change the username and password fields to
   //    whatever you want
@@ -68,7 +82,10 @@ test('submitting the form calls onSubmit with username and password', async () =
   // expect(submittedData).toEqual({username: username, password: password})
 
   // Extra 1
-  expect(handleSubmit).toHaveBeenCalledWith({username: username, password: password})
+  expect(handleSubmit).toHaveBeenCalledWith({
+    username: username,
+    password: password,
+  })
 })
 
 /*

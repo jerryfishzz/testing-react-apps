@@ -4,9 +4,9 @@
 import * as React from 'react'
 import {render, screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import faker from 'faker' // Extra 2, 3
+// import faker from 'faker' // Extra 2, 3
 import Login from '../../components/login'
-// import {build, fake} from '@jackfranklin/test-data-bot'
+import {build, fake} from '@jackfranklin/test-data-bot'
 
 // Extra 2
 // function buildLoginForm() {
@@ -17,20 +17,21 @@ import Login from '../../components/login'
 // }
 
 // Extra 3
-function buildLoginForm(overrides) {
-  return {
-    username: faker.internet.userName(),
-    password: faker.internet.password(),
-    ...overrides,
-  }
-}
+// function buildLoginForm(overrides) {
+//   return {
+//     username: faker.internet.userName(),
+//     password: faker.internet.password(),
+//     ...overrides,
+//   }
+// }
 
-// const loginBuilder = build('Login', {
-//   fields: {
-//     username: fake(f => f.name.findName()),
-//     password: fake(f => f.internet.password()),
-//   },
-// })
+// Extra 4
+const loginBuilder = build('Login', {
+  fields: {
+    username: fake(f => f.name.findName()),
+    password: fake(f => f.internet.password()),
+  },
+})
 
 test('submitting the form calls onSubmit with username and password', async () => {
   // 🐨 create a variable called "submittedData" and a handleSubmit function that
@@ -72,7 +73,10 @@ test('submitting the form calls onSubmit with username and password', async () =
   // const {username, password} = buildLoginForm()
 
   // Extra 3
-  const {username, password} = buildLoginForm({password: 'abc'})
+  // const {username, password} = buildLoginForm({password: 'abc'})
+
+  // Extra 4
+  const {username, password} = loginBuilder({overrides: {password: 'abc'}})
 
   console.log(username)
   console.log(password)
@@ -100,7 +104,7 @@ test('submitting the form calls onSubmit with username and password', async () =
   //   password: password,
   // })
 
-  // Extra 3
+  // Extra 3, 4
   expect(handleSubmit).toHaveBeenCalledWith({
     username: username,
     password: 'abc',

@@ -43,16 +43,12 @@ test('submitting the form calls onSubmit with username and password', async () =
   // let submittedData
   // const handleSubmit = data => (submittedData = data)
 
-  // Extra 1
+  // Extra 1, 2, 3, 4
   const handleSubmit = jest.fn()
 
   //
   // 🐨 render the login with your handleSubmit function as the onSubmit prop
 
-  // Exercise
-  // render(<Login onSubmit={handleSubmit} />)
-
-  // Extra 1
   render(<Login onSubmit={handleSubmit} />)
 
   screen.debug()

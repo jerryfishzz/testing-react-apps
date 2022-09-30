@@ -2,19 +2,36 @@
 // http://localhost:3000/easy-button
 
 import * as React from 'react'
-import {render, screen} from '@testing-library/react'
+// import {render, screen} from '@testing-library/react' // Exercise, Extra 1
+import {render as rtlRender, screen} from '@testing-library/react' // Extra 2
 import {ThemeProvider} from '../../components/theme'
 import EasyButton from '../../components/easy-button'
 
-test('renders with the light styles for the light theme', () => {
-  // Exercise
+// Extra 2
+// Note, follow the tutorial implementation. It's more generic.
+function render(ui, option) {
   function Wrapper({children}) {
-    return <ThemeProvider initialTheme="light">{children}</ThemeProvider>
+    return <ThemeProvider initialTheme={option}>{children}</ThemeProvider>
   }
 
-  // Exercise
+  return rtlRender(ui, {wrapper: Wrapper})
+}
+
+test('renders with the light styles for the light theme', () => {
   // 🐨 uncomment all of this code and your test will be busted on the next line:
-  render(<EasyButton>Easy</EasyButton>, {wrapper: Wrapper})
+
+  // Exercise
+  // function Wrapper({children}) {
+  //   return <ThemeProvider initialTheme="light">{children}</ThemeProvider>
+  // }
+
+  // Exercise, extra 1
+  // render(<EasyButton>Easy</EasyButton>, {wrapper: Wrapper})
+
+  // Extra 2
+  // Note, follow the tutorial implementation. It's more generic.
+  render(<EasyButton>Easy</EasyButton>, 'light')
+
   const button = screen.getByRole('button', {name: /easy/i})
   expect(button).toHaveStyle(`
     background-color: white;
@@ -27,13 +44,18 @@ test('renders with the light styles for the light theme', () => {
 
 /* eslint no-unused-vars:0 */
 
-// Extra 1
 test('renders with the dark styles for the dark theme', () => {
-  function Wrapper({children}) {
-    return <ThemeProvider initialTheme="dark">{children}</ThemeProvider>
-  }
+  // Extra 1
+  // function Wrapper({children}) {
+  //   return <ThemeProvider initialTheme="dark">{children}</ThemeProvider>
+  // }
 
-  render(<EasyButton>Easy</EasyButton>, {wrapper: Wrapper})
+  // render(<EasyButton>Easy</EasyButton>, {wrapper: Wrapper})
+
+  // Extra 2
+  // Note, follow the tutorial implementation. It's more generic.
+  render(<EasyButton>Easy</EasyButton>, 'dark')
+
   const button = screen.getByRole('button', {name: /easy/i})
   expect(button).toHaveStyle(`
     background-color: black;

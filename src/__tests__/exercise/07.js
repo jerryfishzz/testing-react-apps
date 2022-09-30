@@ -3,19 +3,22 @@
 
 import * as React from 'react'
 // import {render, screen} from '@testing-library/react' // Exercise, Extra 1
-import {render as rtlRender, screen} from '@testing-library/react' // Extra 2
+// import {render as rtlRender, screen} from '@testing-library/react' // Extra 2
+
+import {render, screen} from 'test/test-utils' // Extra 3. Path configured in jest setting.
+
 import {ThemeProvider} from '../../components/theme'
 import EasyButton from '../../components/easy-button'
 
 // Extra 2
 // Note, follow the tutorial implementation. It's more generic.
-function render(ui, option) {
-  function Wrapper({children}) {
-    return <ThemeProvider initialTheme={option}>{children}</ThemeProvider>
-  }
+// function render(ui, option) {
+//   function Wrapper({children}) {
+//     return <ThemeProvider initialTheme={option}>{children}</ThemeProvider>
+//   }
 
-  return rtlRender(ui, {wrapper: Wrapper})
-}
+//   return rtlRender(ui, {wrapper: Wrapper})
+// }
 
 test('renders with the light styles for the light theme', () => {
   // 🐨 uncomment all of this code and your test will be busted on the next line:
@@ -30,7 +33,10 @@ test('renders with the light styles for the light theme', () => {
 
   // Extra 2
   // Note, follow the tutorial implementation. It's more generic.
-  render(<EasyButton>Easy</EasyButton>, 'light')
+  // render(<EasyButton>Easy</EasyButton>, 'light')
+
+  // Extra 3
+  render(<EasyButton>Easy</EasyButton>, {theme: 'light'})
 
   const button = screen.getByRole('button', {name: /easy/i})
   expect(button).toHaveStyle(`
@@ -54,7 +60,10 @@ test('renders with the dark styles for the dark theme', () => {
 
   // Extra 2
   // Note, follow the tutorial implementation. It's more generic.
-  render(<EasyButton>Easy</EasyButton>, 'dark')
+  // render(<EasyButton>Easy</EasyButton>, 'dark')
+
+  // Extra 3
+  render(<EasyButton>Easy</EasyButton>, {theme: 'dark'})
 
   const button = screen.getByRole('button', {name: /easy/i})
   expect(button).toHaveStyle(`

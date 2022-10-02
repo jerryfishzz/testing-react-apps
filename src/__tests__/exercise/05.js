@@ -86,5 +86,11 @@ test(`logging in without username`, async () => {
 
   await waitForElementToBeRemoved(() => screen.getByLabelText(/loading/i))
 
-  expect(screen.getByRole('alert')).toHaveTextContent(/username required/i)
+  // Extra 2
+  // expect(screen.getByRole('alert')).toHaveTextContent(/username required/i)
+
+  // Extra 3
+  expect(screen.getByRole('alert').textContent).toMatchInlineSnapshot(
+    `"username required"`,
+  )
 })

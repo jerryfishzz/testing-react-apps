@@ -10,6 +10,8 @@ import {build, fake} from '@jackfranklin/test-data-bot'
 import {rest} from 'msw'
 import {setupServer} from 'msw/node'
 
+import {handlers} from '../../test/server-handlers'
+
 import Login from '../../components/login-submission'
 
 const buildLoginForm = build({
@@ -22,24 +24,28 @@ const buildLoginForm = build({
 // 🐨 get the server setup with an async function to handle the login POST request:
 // 💰 here's something to get you started
 const server = setupServer(
-  rest.post(
-    'https://auth-provider.example.com/api/login',
-    async (req, res, ctx) => {
-      // you'll want to respond with an JSON object that has the username.
-      // 📜 https://mswjs.io/
+  // Exercise
+  // rest.post(
+  //   'https://auth-provider.example.com/api/login',
+  //   async (req, res, ctx) => {
+  //     // you'll want to respond with an JSON object that has the username.
+  //     // 📜 https://mswjs.io/
 
-      // const {username} = await req.json()
-      // Don't use the example from MSW. The data structures are different.
+  //     // const {username} = await req.json()
+  //     // Don't use the example from MSW. The data structures are different.
 
-      console.log(req.body.username)
+  //     console.log(req.body.username)
 
-      return res(
-        ctx.json({
-          username: req.body.username,
-        }),
-      )
-    },
-  ),
+  //     return res(
+  //       ctx.json({
+  //         username: req.body.username,
+  //       }),
+  //     )
+  //   },
+  // ),
+
+  // Extra 1
+  ...handlers,
 )
 
 // 🐨 before all the tests, start the server with `server.listen()`
@@ -68,4 +74,17 @@ test(`logging in displays the user's username`, async () => {
   // we render the username.
   // 🐨 assert that the username is on the screen
   expect(screen.getByText(username)).toBeInTheDocument()
+})
+
+// Extra 2
+test(`logging in without username`, async () => {
+  render(<Login />)
+  const {password} = buildLoginForm()
+
+  await userEvent.type(screen.getByLabelText(/password/i), password)
+  await userEvent.click(screen.getByRole('button', {name: /submit/i}))
+
+  await waitForElementToBeRemoved(() => screen.getByLabelText(/loading/i))
+
+  expect(screen.getByRole('alert')).toHaveTextContent(/username required/i)
 })

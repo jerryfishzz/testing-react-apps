@@ -54,6 +54,9 @@ beforeAll(() => server.listen())
 // 🐨 after all the tests, stop the server with `server.close()`
 afterAll(() => server.close())
 
+// Extra 4
+afterEach(() => server.resetHandlers())
+
 test(`logging in displays the user's username`, async () => {
   render(<Login />)
   const {username, password} = buildLoginForm()
@@ -93,4 +96,28 @@ test(`logging in without username`, async () => {
   expect(screen.getByRole('alert').textContent).toMatchInlineSnapshot(
     `"username required"`,
   )
+})
+
+// Extra 4
+test(`sends a status code 500 error`, async () => {
+  const textErrorMessage = 'Oh no, something bad happened'
+  server.use(
+    rest.post(
+      // note that it's the same URL as our app-wide handler
+      // so this will override the other.
+      'https://auth-provider.example.com/api/login',
+      async (req, res, ctx) => {
+        // your one-off handler here
+        return res(ctx.json({message: textErrorMessage}), ctx.status(500))
+      },
+    ),
+  )
+
+  render(<Login />)
+  await userEvent.click(screen.getByRole('button', {name: /submit/i}))
+  await waitForElementToBeRemoved(() => screen.getByLabelText(/loading/i))
+
+  // screen.debug()
+
+  expect(screen.getByRole('alert')).toHaveTextContent(textErrorMessage)
 })

@@ -26,9 +26,18 @@ function Counter() {
 }
 
 // Extra 1
-let result
+// let result
+// function TestComponent(props) {
+//   result = useCounter(props)
+//   return null
+// }
+
+// Extra 2
+// Although this is the way from the hint, the tutorial uses another implementation lokking quite different.
+// I think this way should be also correct while the answer is more react style.
+const results = {}
 function TestComponent(props) {
-  result = useCounter(props)
+  Object.assign(results, useCounter())
   return null
 }
 
@@ -54,24 +63,38 @@ test('exposes the count and increment/decrement functions', async () => {
   // await userEvent.click(increment)
   // expect(text).toHaveTextContent('Current count: 1')
 
-  // Extra 1
+  // Extra 1, 2
   render(<TestComponent />)
 
+  // Extra 1
   // Note, here cannot use destrcture of result since the count value
   // will be stuck at the moment when destructure happens
   // no matter using let or const to denouce the destructure
   // or put the TestComponent definition inside or outside of the testing.
-  expect(result.count).toBe(0)
+  // expect(result.count).toBe(0)
+
+  // act(() => {
+  //   result.increment()
+  // })
+  // expect(result.count).toBe(1)
+
+  // act(() => {
+  //   result.decrement()
+  // })
+  // expect(result.count).toBe(0)
+
+  // Extra 2
+  expect(results.count).toBe(0)
 
   act(() => {
-    result.increment()
+    results.increment()
   })
-  expect(result.count).toBe(1)
+  expect(results.count).toBe(1)
 
   act(() => {
-    result.decrement()
+    results.decrement()
   })
-  expect(result.count).toBe(0)
+  expect(results.count).toBe(0)
 })
 
 /* eslint no-unused-vars:0 */

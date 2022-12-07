@@ -47,6 +47,8 @@ test('displays the users current location', async () => {
   // To mock something you need to know its API and simulate that in your mock:
   // 📜 https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition
   window.navigator.geolocation.getCurrentPosition.mockImplementation(success)
+  // Since it's a mock function, here it actually takes the argument signature of the original function.
+  // In this case, it needs at least a success function as the first parameter.
 
   // here's an example of the API:
   // function success(position) {}
